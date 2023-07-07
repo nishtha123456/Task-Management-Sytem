@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from 'react'
 //import { ReactDOM } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
+import { id } from './Users';
 import { useNavigate } from 'react-router-dom';
+import { Description } from '@mui/icons-material';
 
-export default function AddTask ()  {
+export default function EditTask ()  {
 
    const[Users,setUsers]=useState([]);
   const  Navigate=useNavigate();
@@ -37,16 +39,8 @@ const  handletitle=(e)=>{
 
 
 const  handleAdd=()=>{
-    const Data={title:title ,description:description, status:status,due_date:due_date,assigned_user:assigned_user }
-    Axios({
-      method: "POST",
-      
-      url: "http://localhost:5000/", 
-      data:Data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res =>{console.log("users task sent:",res.data.Users);setUsers(res.data.users) ;});
+  var data=[];
+    axios.patch('http://localhost:5000/', { data: { id:id,title:title,description:Description,status:status,due_date:due_date,assigned_user:assigned_user} }).then(res =>{console.log("users task sent:",res.data);setUsers(res.data) ;});
    
 Navigate('./Users');
    // setAuthers({authers: prev=>[...prev,res.data.authers]}) window.location.reload();
@@ -58,42 +52,45 @@ Navigate('./Users');
   
 <>      
   
+{Users.map((User)=>
 <div className='container fluid mt-5'>
-<div class="mb-3 row">
+
+  <div class="mb-3 row">
     <label for="staticEmail" class="col-sm-2 col-form-label bg-success"> Enter Title</label>
     <div class="col-sm-10">
-      <input type="text"  class="form-control"  onChange={(e)=>{handletitle(e)}} />
+      <input type="text" value={User.title} class="form-control"  onChange={(e)=>{handletitle(e)}} />
     </div>
   </div>
   <div class="mb-3 row">
     <label for="inputPassword" class="col-sm-2 col-form-label bg-success"  >Description</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" onChange={(e)=>{handleDescription(e)}} />
+      <input type="text" class="form-control" value={User.description} onChange={(e)=>{handleDescription(e)}} />
     </div>
     </div>
     <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label bg-success"  >status</label>
+    <label for="inputPassword"  class="col-sm-2 col-form-label bg-success"  >status</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" onChange={(e)=>{handlestatus(e)}} />
+      <input type="text" value={User.status} class="form-control" onChange={(e)=>{handlestatus(e)}} />
     </div>
     </div>
   <div class="mb-3 row">
     <label for="inputPassword" class="col-sm-2 col-form-label bg-success" >Due_date</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control"  onChange={(e)=>{handleDue_date(e)}}/>
+      <input type="text" class="form-control"  value={User.due_date} onChange={(e)=>{handleDue_date(e)}}/>
     </div>
   
   </div>
   <div class="mb-3 row">
     <label for="inputPassword" class="col-sm-2 col-form-label bg-success" >Assigned_user</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control"  onChange={(e)=>{handleassigned_user(e)}}/>
+      <input type="text" class="form-control" value={User.assigned_user} onChange={(e)=>{handleassigned_user(e)}}/>
     </div>
     </div>
-    
+
 
     <div className="btn btn-primary m-2" onClick={()=>{handleAdd();}}>Save</div>
     </div>
+)}
    </> 
   )
 }

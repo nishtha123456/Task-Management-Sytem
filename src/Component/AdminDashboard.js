@@ -17,10 +17,22 @@ export default function AdminDashboard()
         
       },[])
     
+      const handleonSort=()=>{
+        axios({
+          method: "GET",
+          url: "http://localhost:5000/sort",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(res=>{console.log("Users Task fetched:",res.data);setUsers(res.data)});
+       
+      }
    
 return(
-    <div><div className="btn btn-primary m-2" onClick={()=>{}}>sortTask</div>
-<table className="table">
+    <div class="table-responsive container-fluid">
+      <h1 className='text-center'>Admin Dashboard</h1>
+      <div className="btn btn-primary m-2" onClick={()=>{handleonSort();}}>SortTask by Title Alphabetically</div>
+<table className="table table-success table-striped">
 
     <thead>
         <tr>

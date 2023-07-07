@@ -10,6 +10,17 @@ var Users=[]
    app.use(cors());
    app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+/* MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  
+  dbo.createCollection("Tasks", function(err, res) {
+    if (err) throw err;
+    console.log("Collection created!");
+    db.close();
+  });
+}); */
+
 
 /* MongoClient.connect(url, function(err, db) {
  if (err) throw err;
@@ -38,6 +49,21 @@ app.get('/', async(req, res) => {
     });
  });
 });
+app.get('/sort', async(req, res) => {
+  MongoClient.connect(url, function(err, db) {
+    var dbo = db.db("mydb");
+    var mysort = { title: 1 };
+
+    dbo.collection("Tasks").find({}).sort(mysort).toArray(function(err, result) {
+  
+      if (err) throw err;
+      console.log(result);
+      Users=result;
+    res.send(result)
+       db.close();
+     });
+  });
+ });
 app.post('/', async(req, res) => {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -67,3 +93,22 @@ app.post('/', async(req, res) => {
   });
 
 });
+app.patch('/', (req, res) => {
+  //res.send("patch Request Called")
+  console.log("data",req.body.id)
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    var myobj =req.body.id;
+    var newvalue=req.body;
+    dbo.collection("Tasks").updateOne(myobj,newvalue, function(err, res) {
+      if (err) throw err;
+      res.send(res)
+      console.log(" documents updated");
+      db.close();
+    });
+  });
+
+});
+

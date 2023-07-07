@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+export var id;
 export default function Users()
 {
     var [Users,setUsers]=useState([]);
   const Navigate=useNavigate();
+  
 
     useEffect(()=>{
         axios({
@@ -20,6 +22,10 @@ export default function Users()
       const handleAdd =()=>{
 
         Navigate('./AddTask');
+      }
+      const handleEdit =(user)=>{
+        id=user.id;
+        Navigate('./EditTask');
       }
       const  handledelete=(User) =>{
         axios.delete('http://localhost:5000/', { data: { id: User.id } })
@@ -39,7 +45,11 @@ export default function Users()
      }
 
 return(
-<table className="table">
+
+  
+  <div class="table-responsive container-fluid">
+     <div className="btn btn-primary m-2" onClick={()=>{handleAdd();}}>Add Task</div>
+    <table className="table table-success table-striped">
     <thead>
         <tr>
         <th>Title</th>
@@ -47,6 +57,7 @@ return(
         <th>Status</th>
         <th>due_date</th>
         <th>Assigned User</th>
+        <th></th>
         </tr>
     </thead>
     <tbody>
@@ -57,20 +68,26 @@ return(
     <td>{User.status}</td>
     <td>{User.due_date}</td>
     <td>{User.assigned_user}</td>
-    <div className="btn btn-danger m-2" onClick={()=>{handledelete(User);}}>Delete</div>
+
+    <td><div className="btn-group">
+      <div className="btn btn-danger m-2" onClick={()=>{handledelete(User);}}>Delete</div>
+    <div className="btn btn-primary m-2" onClick={()=>{handleEdit(User);}}>Edit</div>
+    </div>
+    </td>
     </tr>
     )}
     </tbody>
-    <div className="btn-group">
+    
               
-    <div className="btn btn-primary m-2" onClick={()=>{handleAdd();}}>Add Task</div>
-    <div className="btn btn-primary m-2" onClick={()=>{handleAdd();}}>Edit</div>
+   
+    
     
    
-    </div>
+    
               
     </table>
-    
+    </div>
+ 
 );
 
 }
