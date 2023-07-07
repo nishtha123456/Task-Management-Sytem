@@ -1,3 +1,15 @@
+
+#  Login 
+user login 
+username=asha and password=asha
+
+admin login
+username=admin  and password=admin
+
+# install all dependencies as seen in package.json file
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
