@@ -30,6 +30,7 @@ function App() {
      <Route exact path='/Login/Users/EditTask' element={<EditTask/>}/>
      <Route exact path='Admin/AdminDashboard' element={<AdminDashboard/>}/>
      <Route exact path='/Login/Users/AddTask/Users' element={<Users/>}/>
+     <Route exact path='/Login/Users/EditTask/Users' element={<Users/>}/>
       </Routes>
     
   
