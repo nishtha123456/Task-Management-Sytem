@@ -64,6 +64,7 @@ app.get('/sort', async(req, res) => {
      });
   });
  });
+
 app.post('/', async(req, res) => {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -93,18 +94,19 @@ app.post('/', async(req, res) => {
   });
 
 });
-app.patch('/', (req, res) => {
+app.put('/', (req, res) => {
   //res.send("patch Request Called")
-  console.log("data",req.body.id)
+
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("mydb");
-    var myobj =req.body.id;
-    var newvalue=req.body;
-    dbo.collection("Tasks").updateOne(myobj,newvalue, function(err, res) {
+    var myobj =req.body;
+    console.log("data",req.body)
+    var newvalue={$set:req.body};
+    dbo.collection("Tasks").updateOne(myobj,newvalue, function(err, result) {
       if (err) throw err;
-      res.send(res)
+      res.send(result);
       console.log(" documents updated");
       db.close();
     });

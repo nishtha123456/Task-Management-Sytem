@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-export var id;
+export var user1=[];
 export default function Users()
 {
     var [Users,setUsers]=useState([]);
@@ -24,7 +24,12 @@ export default function Users()
         Navigate('./AddTask');
       }
       const handleEdit =(user)=>{
-        id=user.id;
+        
+        axios.put('http://localhost:5000/', { data: { id: user.id } })
+        .then(res=>{ console.log('Data UPDATED',user);user1=user.title;})
+        .catch(err => {
+          console.error(err);})
+      
         Navigate('./EditTask');
       }
       const  handledelete=(User) =>{
@@ -49,7 +54,9 @@ return(
   
   <div class="table-responsive container-fluid">
      <div className="btn btn-primary m-2" onClick={()=>{handleAdd();}}>Add Task</div>
+     <h1 className='text-center'>User Tasks Dashboard</h1>
     <table className="table table-success table-striped">
+    
     <thead>
         <tr>
         <th>Title</th>
@@ -71,7 +78,7 @@ return(
 
     <td><div className="btn-group">
       <div className="btn btn-danger m-2" onClick={()=>{handledelete(User);}}>Delete</div>
-    <div className="btn btn-primary m-2" onClick={()=>{handleEdit(User);}}>Edit</div>
+    <div className="btn btn-primary m-2" >Edit</div>
     </div>
     </td>
     </tr>
