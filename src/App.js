@@ -22,15 +22,26 @@ function App() {
       
 
     <Routes>
-     <Route exact path='/' element={<Banner />}/>
+     <Route exact path='/' element={<Login/>}/>
      <Route exact path='/Login' element={<Login />}/>
      <Route exact path='/Admin' element={<Admin />}/>
+     <Route exact path='/Users' element={<Users/>}/>
      <Route exact path='/Login/Users' element={<Users/>}/>
+     
      <Route exact path='/Login/Users/AddTask' element={<AddTask/>}/>
+     <Route exact path='/Login/Users/EditTask/Users/AddTask' element={<AddTask/>}/>
+     
+     <Route exact path='/Login/Users/AddTask/EditTask/Users/AddTask' element={<AddTask/>}/>
      <Route exact path='/Login/Users/EditTask' element={<EditTask/>}/>
+     <Route exact path='/Users/EditTask' element={<EditTask/>}/>
      <Route exact path='Admin/AdminDashboard' element={<AdminDashboard/>}/>
      <Route exact path='/Login/Users/AddTask/Users' element={<Users/>}/>
+     <Route exact path='/Login/Users/EditTask/Users/AddTask/Users' element={<Users/>}/>
+     <Route exact path='/Users/AddTask/Users' element={<Users/>}/>
      <Route exact path='/Login/Users/EditTask/Users' element={<Users/>}/>
+     <Route exact path='/Login/Users/AddTask/Users/EditTask/Users' element={<Users/>}/>
+     <Route exact path='/Login/Users/AddTask/Users/EditTask' element={<EditTask/>}/>
+     
       </Routes>
     
   
